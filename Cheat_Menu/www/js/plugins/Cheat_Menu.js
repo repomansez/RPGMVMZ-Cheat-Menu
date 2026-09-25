@@ -653,9 +653,10 @@ Cheat_Menu.enemy_hp_cheat_4 = function() {
 };
 
 // Append the enemy hp cheats to the menu
-Cheat_Menu.append_enemy_cheats = function(key1, key2, key3, key4) {
+Cheat_Menu.append_enemy_cheats = function(key1, key2, key3, key4, key5) {
 	Cheat_Menu.append_title("Alive");
 	Cheat_Menu.append_cheat("Enemy HP to 0", "Activate", key1, Cheat_Menu.enemy_hp_cheat_1);
+	Cheat_Menu.append_cheat("Enemy HP to 0", "Activate", key5, Cheat_Menu.enemy_hp_cheat_1);
 	Cheat_Menu.append_cheat("Enemy HP to 1", "Activate", key2, Cheat_Menu.enemy_hp_cheat_2);
 	Cheat_Menu.append_title("All");
 	Cheat_Menu.append_cheat("Enemy HP to 0", "Activate", key3, Cheat_Menu.enemy_hp_cheat_3);
@@ -1577,7 +1578,7 @@ Cheat_Menu.menus.splice(0, 0, function() {
 Cheat_Menu.menus.splice(0, 0, function() {
 	Cheat_Menu.append_cheat_title("Enemy HP");
 
-	Cheat_Menu.append_enemy_cheats(4, 5, 6, 7);
+	Cheat_Menu.append_enemy_cheats(4, 5, 6, 7, "a");
 });
 
 Cheat_Menu.menus.splice(0, 0, function() {
@@ -1636,6 +1637,7 @@ Cheat_Menu.keyCodes.KEYCODE_8 = {keyCode: 56, key_listener: 8};
 Cheat_Menu.keyCodes.KEYCODE_9 = {keyCode: 57, key_listener: 9};
 Cheat_Menu.keyCodes.KEYCODE_MINUS = {keyCode: 189, key_listener: '-'};
 Cheat_Menu.keyCodes.KEYCODE_EQUAL = {keyCode: 187, key_listener: '='};
+Cheat_Menu.keyCodes.KEYCODE_A = {keyCode: 65, key_listener: 'a'};
 
 Cheat_Menu.keyCodes.KEYCODE_TILDE = {keyCode: 192, key_listener: '`'};
 
@@ -1707,9 +1709,9 @@ window.addEventListener("keydown", function(event) {
 		}
 
 		// navigate and activate cheats
-		else if (Cheat_Menu.cheat_menu_open) {
+		else if (!Cheat_Menu.cheat_menu_open || Cheat_Menu.cheat_menu_open) {
 			// move menu position
-			if (event.keyCode == Cheat_Menu.keyCodes.KEYCODE_TILDE.keyCode) {
+			if (event.keyCode == Cheat_Menu.keyCodes.KEYCODE_1.keyCode) {
 				Cheat_Menu.position++;
 				if (Cheat_Menu.position > 4) {
 					Cheat_Menu.position = 0;
