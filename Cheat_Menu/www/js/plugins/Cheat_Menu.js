@@ -39,8 +39,9 @@ Cheat_Menu.speed_unlocked = true;
 Cheat_Menu.speed_initialized = false;
 
 Cheat_Menu.AllowGlobalKeys = false; // global keybinds
-Cheat_Menu.GameSpeedup = true; // speedup plugin
+Cheat_Menu.GameSpeedup = false; // speedup plugin
 Cheat_Menu.GameSpeed = 1;
+Cheat_Menu.speedup_installed = false;
 
 /////////////////////////////////////////////////
 // Initial values for reseting on new game/load
@@ -80,47 +81,81 @@ Cheat_Menu.initial_values.speed_unlocked = true;
 /////////////////////////////////////////////////
 
 Cheat_Menu.speedup = function () { // Credits to Zero_G for speedup logic :)
-    if (Cheat_Menu.GameSpeedup) {
+	if (Cheat_Menu.speedup_installed) {
+		return;
+	}
 
-        var _Scene_Map_update = Scene_Map.prototype.update;
-        Scene_Map.prototype.update = function () {
-            for (var i = 0; i < Math.floor(Cheat_Menu.GameSpeed); i++) {
-                _Scene_Map_update.call(this);
-            }
-        };
+	Cheat_Menu.speedup_installed = true;
 
-        var _Spriteset_Base_update = Spriteset_Base.prototype.update;
-        Spriteset_Base.prototype.update = function () {
-            for (var i = 0; i < Math.floor(Cheat_Menu.GameSpeed); i++) {
-                _Spriteset_Base_update.call(this);
-            }
-        };
+	var _Scene_Map_update = Scene_Map.prototype.update;
+	Scene_Map.prototype.update = function () {
+		if (!Cheat_Menu.GameSpeedup) {
+			_Scene_Map_update.call(this);
+			return;
+		}
 
-        var _Scene_Battle_prototype_update = Scene_Battle.prototype.update;
-        Scene_Battle.prototype.update = function () {
-            for (var i = 0; i < Math.floor(Cheat_Menu.GameSpeed); i++) {
-                _Scene_Battle_prototype_update.call(this);
-            }
-        };
-    }
+		for (var i = 0; i < Math.floor(Cheat_Menu.GameSpeed); i++) {
+			_Scene_Map_update.call(this);
+		}
+	};
+
+
+	var _Spriteset_Base_update = Spriteset_Base.prototype.update;
+	Spriteset_Base.prototype.update = function () {
+		if (!Cheat_Menu.GameSpeedup) {
+			_Spriteset_Base_update.call(this);
+			return;
+		}
+
+		for (var i = 0; i < Math.floor(Cheat_Menu.GameSpeed); i++) {
+			_Spriteset_Base_update.call(this);
+		}
+	};
+
+
+	var _Scene_Battle_update = Scene_Battle.prototype.update;
+	Scene_Battle.prototype.update = function () {
+		if (!Cheat_Menu.GameSpeedup) {
+			_Scene_Battle_update.call(this);
+			return;
+		}
+
+		for (var i = 0; i < Math.floor(Cheat_Menu.GameSpeed); i++) {
+			_Scene_Battle_update.call(this);
+		}
+	};
+}
+
+Cheat_Menu.scroll_speed = function (direction, event) {
+	if (direction == "left") {
+		Cheat_Menu.GameSpeed = Cheat_Menu.GameSpeed - 0.5;
+	} else {
+		Cheat_Menu.GameSpeed = Cheat_Menu.GameSpeed + 0.5;
+	}
+
+	SoundManager.playSystemSound(0);
+	Cheat_Menu.update_menu();
 };
 
-Cheat_Menu.speedup_increase = function (key5){
-	Cheat_Menu.GameSpeed += 1
-}
+/*Cheat_Menu.speedup_scroll_handler = function (key4, key5){
+	Cheat_Menu.append_scroll_selector("Speed", key4, key5){
+		Cheat_Menu.GameSpeed += 1
+		Cheat_Menu.GameSpeed -= 1
+	}
+}*/
 
-Cheat_Menu.speedup_decrease = function (key5){
-	Cheat_Menu.GameSpeed -= 1
-}
-
-Cheat_Menu.toggle_speedup = function(){
+Cheat_Menu.toggle_speedup = function () {
 	Cheat_Menu.GameSpeedup = !Cheat_Menu.GameSpeedup;
-	if (Cheat_Menu.GameSpeedup){
+	//Cheat_Menu.speedup();
+	if (!Cheat_Menu.GameSpeedup) {
+		Cheat_Menu.GameSpeed = 1;
+		Cheat_Menu.speedup();
+	} else {
 		Cheat_Menu.speedup();
 	}
 	SoundManager.playSystemSound(1);
 	Cheat_Menu.update_menu();
-}	
+}
 
 // enable god mode for an actor
 Cheat_Menu.god_mode = function (actor) {
@@ -329,7 +364,7 @@ Cheat_Menu.append_global_keybinds = function (key0) {
 	//Cheat_Menu.append_global_cheat()
 }
 
-Cheat_Menu.append_speedup = function(key4, key5, key0){
+Cheat_Menu.append_speedup = function (key4, key5, key0) {
 	var status_text;
 	if (Cheat_Menu.GameSpeedup) {
 		status_text = "true";
@@ -337,14 +372,20 @@ Cheat_Menu.append_speedup = function(key4, key5, key0){
 		status_text = "false";
 	}
 	Cheat_Menu.append_title("Game Speedup");
-	Cheat_Menu.append_cheat(
-		"Speed",
+	/*	Cheat_Menu.append_cheat(
+			"Speed",
+			Cheat_Menu.GameSpeed,
+			key5,
+			Cheat_Menu.speedup_increase,
+		);*/
+	Cheat_Menu.append_scroll_selector(
 		Cheat_Menu.GameSpeed,
+		key4,
 		key5,
-		Cheat_Menu.speedup_increase,
+		Cheat_Menu.scroll_speed,
 	);
 	Cheat_Menu.append_cheat(
-		"Enemy HP to 0",
+		"Toggle",
 		status_text,
 		key0,
 		Cheat_Menu.toggle_speedup,
@@ -356,7 +397,7 @@ Cheat_Menu.append_speedup = function(key4, key5, key0){
 		Cheat_Menu.enemy_hp_cheat_2,
 	);*/
 
-	
+
 }
 // initialize speed hook for locking
 Cheat_Menu.initialize_speed_lock = function () {
