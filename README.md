@@ -1,5 +1,11 @@
+# Extra features
+* Hard-coded global keybinds (activate shit without having the menu open)
+* Game speedup (not walking speed, whole game speedup)
+
+
 RPG Maker MV Cheat Menu Plugin
 ==============================
+
 
 I've created a plugin for RPG Maker MV that allows users to access a Cheat Menu in game. The controls are all input via the number keys \[0\]\-\[9\] (not the NUMPAD) (other keys may be used as well now) or the mouse.
 
