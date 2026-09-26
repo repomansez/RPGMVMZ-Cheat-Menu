@@ -137,22 +137,9 @@ Cheat_Menu.scroll_speed = function (direction, event) {
 	Cheat_Menu.update_menu();
 };
 
-/*Cheat_Menu.speedup_scroll_handler = function (key4, key5){
-	Cheat_Menu.append_scroll_selector("Speed", key4, key5){
-		Cheat_Menu.GameSpeed += 1
-		Cheat_Menu.GameSpeed -= 1
-	}
-}*/
-
 Cheat_Menu.toggle_speedup = function () {
 	Cheat_Menu.GameSpeedup = !Cheat_Menu.GameSpeedup;
-	//Cheat_Menu.speedup();
-	if (!Cheat_Menu.GameSpeedup) {
-		Cheat_Menu.GameSpeed = 1;
-		Cheat_Menu.speedup();
-	} else {
-		Cheat_Menu.speedup();
-	}
+	Cheat_Menu.speedup();
 	SoundManager.playSystemSound(1);
 	Cheat_Menu.update_menu();
 }
@@ -372,12 +359,6 @@ Cheat_Menu.append_speedup = function (key4, key5, key0) {
 		status_text = "false";
 	}
 	Cheat_Menu.append_title("Game Speedup");
-	/*	Cheat_Menu.append_cheat(
-			"Speed",
-			Cheat_Menu.GameSpeed,
-			key5,
-			Cheat_Menu.speedup_increase,
-		);*/
 	Cheat_Menu.append_scroll_selector(
 		Cheat_Menu.GameSpeed,
 		key4,
@@ -390,14 +371,6 @@ Cheat_Menu.append_speedup = function (key4, key5, key0) {
 		key0,
 		Cheat_Menu.toggle_speedup,
 	);
-	/*Cheat_Menu.append_cheat(
-		"Enemy HP to 1",
-		"Activate",
-		key2,
-		Cheat_Menu.enemy_hp_cheat_2,
-	);*/
-
-
 }
 // initialize speed hook for locking
 Cheat_Menu.initialize_speed_lock = function () {
