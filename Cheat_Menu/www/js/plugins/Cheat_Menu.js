@@ -128,9 +128,13 @@ Cheat_Menu.speedup = function () { // Credits to Zero_G for speedup logic :)
 
 Cheat_Menu.scroll_speed = function (direction, event) {
 	if (direction == "left") {
-		Cheat_Menu.GameSpeed = Cheat_Menu.GameSpeed - 0.5;
+		Cheat_Menu.GameSpeed = Cheat_Menu.GameSpeed - 1;
 	} else {
-		Cheat_Menu.GameSpeed = Cheat_Menu.GameSpeed + 0.5;
+		Cheat_Menu.GameSpeed = Cheat_Menu.GameSpeed + 1;
+	}
+
+	if (Cheat_Menu.GameSpeed <= 0) { // disallow 0 or negative speed because game locks up lmfao
+		Cheat_Menu.GameSpeed = 1;
 	}
 
 	SoundManager.playSystemSound(0);
