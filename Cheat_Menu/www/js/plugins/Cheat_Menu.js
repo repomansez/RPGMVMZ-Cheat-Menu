@@ -2261,19 +2261,7 @@ window.addEventListener("keydown", function (event) {
 			Cheat_Menu.enemy_hp_cheat_1();
 			console.log("it worked!");
 		} else if (event.key === "s") {
-			amount = 1;
-			Cheat_Menu.initialize_speed_lock();
-			Cheat_Menu.change_player_speed(amount);
-			SoundManager.playSystemSound(0);
-			console.log("speed worked");
-		} else if (
-			event.key === "S" ||
-			(event.key === "s" && event.shiftKey)
-		) {
-			amount = -1;
-			console.log("bind worked");
-			Cheat_Menu.initialize_speed_lock();
-			Cheat_Menu.change_player_speed(amount);
+			Cheat_Menu.toggle_speedup()
 			SoundManager.playSystemSound(0);
 		} else if (event.key === "d") {
 			if (Cheat_Menu.speed_unlocked) {
